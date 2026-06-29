@@ -1,0 +1,7 @@
+
+
+run 
+
+cd my-real-project
+
+DEEPSEEK_API_KEY=sk-your-key bash deploy/install.sh

@@ -1,0 +1,4 @@
+
+# Independent project-local Hermes
+.venv/
+.hermes/

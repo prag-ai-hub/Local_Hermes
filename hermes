@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Independent Hermes for THIS project (own venv + own .hermes home + own skills).
+set -euo pipefail
+HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+export HERMES_HOME="$HERE/.hermes"
+# Bundled skills live outside .venv (skill discovery excludes .venv paths):
+export HERMES_BUNDLED_SKILLS="$HERE/.hermes-skills/skills"
+[ -d "$HERE/.hermes-skills/optional-skills" ] && export HERMES_OPTIONAL_SKILLS="$HERE/.hermes-skills/optional-skills"
+exec "$HERE/.venv/bin/hermes" "$@"
