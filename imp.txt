@@ -1,7 +1,20 @@
+INSTALL (one time, from the project root)
+
+The key is read from the environment and written to .hermes/.env, which is
+gitignored. Never put the real key in this file — GitHub push protection
+blocks it, and it would be public the moment it lands.
+
+  PowerShell:
+      $env:DEEPSEEK_API_KEY="sk-your-key"; bash deploy/install.sh
+
+  bash (Linux / macOS / Git Bash):
+      DEEPSEEK_API_KEY=sk-your-key bash deploy/install.sh
 
 
-run 
+RUN
 
-cd my-real-project
+  Windows (PowerShell / cmd):
+      .\hermes.cmd
 
-DEEPSEEK_API_KEY=sk-your-key bash deploy/install.sh
+  Linux / macOS / Git Bash:
+      ./hermes

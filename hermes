@@ -5,5 +5,13 @@ HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 export HERMES_HOME="$HERE/.hermes"
 # Bundled skills live outside .venv (skill discovery excludes .venv paths):
 export HERMES_BUNDLED_SKILLS="$HERE/.hermes-skills/skills"
-[ -d "$HERE/.hermes-skills/optional-skills" ] && export HERMES_OPTIONAL_SKILLS="$HERE/.hermes-skills/optional-skills"
-exec "$HERE/.venv/bin/hermes" "$@"
+# Plain `if`, not `[ ... ] && export` — under `set -e` a false test exits the script.
+if [ -d "$HERE/.hermes-skills/optional-skills" ]; then
+  export HERMES_OPTIONAL_SKILLS="$HERE/.hermes-skills/optional-skills"
+fi
+# Windows venvs put executables in Scripts/; POSIX uses bin/
+if [ -d "$HERE/.venv/Scripts" ]; then
+  exec "$HERE/.venv/Scripts/hermes" "$@"
+else
+  exec "$HERE/.venv/bin/hermes" "$@"
+fi
