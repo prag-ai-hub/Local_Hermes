@@ -1,0 +1,19 @@
+# Render Blueprint — Hermes headless backend (`hermes serve`).
+# Deploy: push this repo, then New + > Blueprint on Render and point at it.
+# No healthCheckPath: serve auth-gates every route, so Render's TCP port check
+# is what keeps it healthy.
+services:
+  - type: web
+    name: hermes-serve
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free            # spins down when idle; use `starter` to avoid cold starts
+    envVars:
+      - key: DEEPSEEK_API_KEY
+        sync: false        # set in the Render dashboard (secret)
+      - key: HERMES_DASHBOARD_BASIC_AUTH_USERNAME
+        value: admin
+      - key: HERMES_DASHBOARD_BASIC_AUTH_PASSWORD
+        sync: false        # set your dashboard password in the dashboard
+      - key: HERMES_DASHBOARD_BASIC_AUTH_SECRET
+        generateValue: true  # stable token-signing key (survives restarts)
